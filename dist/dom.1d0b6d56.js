@@ -118,13 +118,50 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"dom.js":[function(require,module,exports) {
-window.dom = {};
+window.dom = {
+  create: function create(string) {
+    // template可以容纳任何元素
+    var container = document.createElement("template");
+    container.innerHTML = string.trim();
+    return container.content.firstChild;
+  },
+  // 可以省去 : function
+  // 把node2放到node1的后面
+  after: function after(node1, node2) {
+    node1.parentNode.insertBefore(node2, node1.nextSibling);
+  },
+  before: function before(node1, node2) {
+    node1.parentNode.insertBefore(node2, node1);
+  },
+  append: function append(parent, child) {
+    parent.appendChild(child);
+  },
+  // 新增父节点
+  wrap: function wrap(parent, node) {
+    dom.before(node, parent);
+    dom.append(parent, node);
+  },
+  remove: function remove(node) {
+    //node.remove()
+    node.parentNode.removeChild(node);
+    return node;
+  },
+  empty: function empty(node) {
+    var childNodes = node.childNodes;
+    var array = []; // for (let i = 0; i < childNodes.length; i++) {
+    //   array.push(dom.remove(childNodes[i]));
+    // }
+    // length是实时变化的，上面方法不可行
 
-dom.create = function (string) {
-  // template可以容纳任何元素
-  var container = document.createElement("template");
-  container.innerHTML = string.trim();
-  return container.content.firstChild;
+    var x = node.firstChild;
+
+    while (x) {
+      array.push(dom.remove(node.firstChild));
+      x = node.firstChild;
+    }
+
+    return array;
+  }
 };
 },{}],"C:/Users/XG/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

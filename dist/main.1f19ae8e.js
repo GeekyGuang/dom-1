@@ -118,8 +118,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
-var div = dom.create("<tr><td><td></tr>");
-console.log(div);
+var div = document.querySelector("#div1");
+console.log(div.childNodes);
+var a = dom.empty(div);
+console.log(a);
 },{}],"C:/Users/XG/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
